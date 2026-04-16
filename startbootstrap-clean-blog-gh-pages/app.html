@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Opening Recommender</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        /* Chess theme styling matching loneking aesthetic */
+        body {
+            font-family: 'Merriweather', Georgia, serif;
+            color: #e8e8e8;
+            background: linear-gradient(rgba(26, 26, 26, 0.85), rgba(51, 51, 51, 0.85)), url('assets/img/fallenking.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            margin-bottom: 20px;
+            color: #e8e8e8;
+            font-size: 1.8em;
+        }
+        .container {
+            max-width: 600px;
+            background: linear-gradient(135deg, #3a3a3a, #4a4a4a);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            border: 1px solid #666;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #e8e8e8;
+            font-size: 1.8em;
+        }
+        select, button {
+            padding: 10px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        select {
+            background: #d0d0d0;
+            color: #2a2a2a;
+            border: 1px solid #999;
+        }
+        button {
+            background: #b0b0b0;
+            color: #2a2a2a;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #d0d0d0;
+            box-shadow: 0 0 10px rgba(208, 208, 208, 0.3);
+        }
+        .recommendation {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(200, 200, 200, 0.1);
+            border-radius: 5px;
+            border-left: 4px solid #999;
+        }
+        .recommendation h2 {
+            color: #e8e8e8;
+            margin-top: 0;
+        }
+        .recommendation p {
+            color: #e8e8e8;
+        }
+        .back-link {
+            margin-top: 20px;
+        }
+        .back-link a {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background: #b0b0b0;
+            color: #2a2a2a;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        .back-link a:hover {
+            background: #d0d0d0;
+            box-shadow: 0 0 10px rgba(208, 208, 208, 0.3);
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            select, button {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chess Opening Recommender</h1>
+        <select id="style">
+            <option value="">Select Playing Style</option>
+            <option value="aggressive">Aggressive</option>
+            <option value="positional">Positional</option>
+            <option value="tactical">Tactical</option>
+            <option value="defensive">Defensive</option>
+            <option value="beginner-friendly">Beginner-Friendly</option>
+        </select>
+        <select id="skill">
+            <option value="">Select Skill Level</option>
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+        </select>
+        <button id="recommendBtn">Recommend Opening</button>
+        <div id="recommendation" class="recommendation" style="display: none;">
+            <h2 id="openingName"></h2>
+            <p id="details"></p>
+            <button id="anotherBtn">Try Another Opening</button>
+        </div>
+        <div class="back-link">
+            <a href="index.html">Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        // Chess openings data
+        const openings = [
+            { name: "Vienna Game", color: "White", desc: "A lively opening with early kingside pressure.", style: "aggressive", skill: "beginner", why: "It encourages attacking play while remaining easy to learn." },
+            { name: "King's Gambit", color: "White", desc: "A sharp opening where White sacrifices a pawn for rapid development.", style: "aggressive", skill: "intermediate", why: "It creates open lines and active attacking chances." },
+            { name: "Alekhine's Defense", color: "Black", desc: "Provocative, inviting White to overextend.", style: "aggressive", skill: "advanced", why: "It leads to dynamic counterattacks and tactical battles." },
+            { name: "Queen's Gambit", color: "White", desc: "White offers a pawn to gain central control.", style: "positional", skill: "beginner", why: "It teaches central control and piece coordination." },
+            { name: "English Opening", color: "White", desc: "A flexible opening focused on long-term positional pressure.", style: "positional", skill: "intermediate", why: "It emphasizes structure and slow strategic buildup." },
+            { name: "Ruy Lopez", color: "White", desc: "A classical opening with deep strategic ideas.", style: "positional", skill: "advanced", why: "It is rich in maneuvering and positional planning." },
+            { name: "Scotch Game", color: "White", desc: "A direct line that opens the center early.", style: "tactical", skill: "beginner", why: "It leads to clear attacking chances and quick tactics." },
+            { name: "Sicilian Defense", color: "Black", desc: "Black fights for the center asymmetrically.", style: "tactical", skill: "intermediate", why: "It creates unbalanced positions full of tactics." },
+            { name: "King's Indian Defense", color: "Black", desc: "A sharp defense that launches a kingside attack.", style: "tactical", skill: "advanced", why: "It offers rich attacking possibilities and sharp play." },
+            { name: "French Defense", color: "Black", desc: "Black builds a solid pawn structure.", style: "defensive", skill: "beginner", why: "It gives a stable position and easy development." },
+            { name: "Caro-Kann Defense", color: "Black", desc: "Solid and reliable against 1.e4.", style: "defensive", skill: "intermediate", why: "It is resilient and minimizes tactical risk." },
+            { name: "Berlin Defense", color: "Black", desc: "A tough, drawish defense with strong piece setup.", style: "defensive", skill: "advanced", why: "It is hard to break down and keeps the position secure." },
+            { name: "Italian Game", color: "White", desc: "Develops pieces harmoniously.", style: "beginner-friendly", skill: "beginner", why: "It is simple to learn and builds good opening habits." },
+            { name: "London System", color: "White", desc: "A solid, easy-to-play system with natural piece development.", style: "beginner-friendly", skill: "intermediate", why: "It is flexible and reduces opening preparation stress." },
+            { name: "Colle System", color: "White", desc: "A dependable setup with clear plans and minimal theory.", style: "beginner-friendly", skill: "advanced", why: "It is stable yet still allows strategic play against many defenses." }
+        ];
+
+        // Function to get recommendations
+        function getRecommendations(style, skill) {
+            return openings.filter(opening => opening.style === style && opening.skill === skill);
+        }
+
+        // Event listeners
+        document.getElementById('recommendBtn').addEventListener('click', function() {
+            const style = document.getElementById('style').value;
+            const skill = document.getElementById('skill').value;
+            if (!style || !skill) {
+                alert('Please select both style and skill level.');
+                return;
+            }
+            const recs = getRecommendations(style, skill);
+            if (recs.length === 0) {
+                alert('No openings found for this combination.');
+                return;
+            }
+            const randomRec = recs[Math.floor(Math.random() * recs.length)];
+            document.getElementById('openingName').textContent = randomRec.name;
+            document.getElementById('details').textContent = `For ${randomRec.color}. ${randomRec.desc} Why it matches the selected style: ${randomRec.why}`;
+            document.getElementById('recommendation').style.display = 'block';
+        });
+
+        document.getElementById('anotherBtn').addEventListener('click', function() {
+            document.getElementById('recommendBtn').click();
+        });
+    </script>
+</body>
+</html>

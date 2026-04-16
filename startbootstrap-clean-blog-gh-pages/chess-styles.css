@@ -1,0 +1,229 @@
+/* Chess Styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap');
+
+/* Body background and font */
+body {
+    font-family: 'Merriweather', Georgia, serif;
+    color: #e8e8e8;
+    background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Navigation */
+#mainNav {
+    background-color: #1a1a1a;
+    color: #e8e8e8;
+    padding: 10px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.navbar-brand {
+    color: #e8e8e8;
+    text-decoration: none;
+    font-size: 1em;
+    font-weight: normal;
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-list li {
+    margin-left: 20px;
+}
+
+.nav-list a {
+    color: #e8e8e8;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-list a:hover {
+    color: #d0d0d0;
+}
+
+/* Header */
+.page-header {
+    text-align: center;
+    padding: 50px 20px;
+    background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
+    color: #e8e8e8;
+    border-bottom: 1px solid #666;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 2.5em;
+    color: #e8e8e8;
+}
+
+.page-header p {
+    font-size: 1.2em;
+    color: #d0d0d0;
+}
+
+/* Main content container */
+.content-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Sections */
+.section {
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, #3a3a3a, #4a4a4a);
+    padding: 30px;
+    border-radius: 8px;
+    border-left: 1px solid #666;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.section h2 {
+    color: #e8e8e8;
+    margin-top: 0;
+    font-size: 1.8em;
+    border-bottom: 1px solid #666;
+    padding-bottom: 10px;
+}
+
+.section p {
+    color: #e8e8e8;
+    line-height: 1.6;
+}
+
+.section ol, .section ul {
+    color: #e8e8e8;
+}
+
+.section li {
+    margin-bottom: 8px;
+}
+
+.section-centered {
+    text-align: center;
+    padding: 20px 18px;
+    margin: 0 auto 16px auto;
+    max-width: 900px;
+    width: calc(100% - 36px);
+}
+
+.section-centered h2 {
+    font-size: 2.05em;
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+    line-height: 1.12;
+}
+
+.section-centered ol,
+.section-centered ul {
+    text-align: left;
+    margin: 0 auto;
+    padding-left: 1.35em;
+    max-width: 820px;
+    list-style-position: outside;
+}
+
+.section-centered ol {
+    margin-top: 14px;
+    list-style-type: decimal;
+}
+
+.section-centered > ol > li {
+    font-size: 1.25em;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.section-centered li ul {
+    margin-top: 6px;
+    margin-left: 1.35em;
+    padding-left: 0.85em;
+    list-style-type: disc;
+}
+
+.section-centered li ul li {
+    font-size: 1.08em;
+    margin-bottom: 8px;
+    line-height: 1.45;
+}
+
+.section-centered .section {
+    padding: 0;
+}
+
+@media (max-width: 768px) {
+    .section-centered {
+        padding: 18px 14px;
+        width: calc(100% - 28px);
+        max-width: 100%;
+    }
+
+    .section-centered h2 {
+        font-size: 1.85em;
+    }
+
+    .section-centered > ol > li {
+        font-size: 1.18em;
+    }
+
+    .section-centered li ul li {
+        font-size: 1.02em;
+    }
+}
+
+/* Chess image */
+.chess-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer */
+footer {
+    background-color: #1a1a1a;
+    color: #e8e8e8;
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid #666;
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 0;
+    color: #b0b0b0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+    }
+    .nav-list {
+        margin-top: 10px;
+    }
+    .page-header h1 {
+        font-size: 2em;
+    }
+}
